@@ -1,0 +1,40 @@
+
+
+# basic ESP & WIFI config for all our d1 mini nodes
+
+esphome:
+  name: $devicename
+  platform: ESP8266
+  board: d1_mini
+
+  build_path: $devicename
+
+wifi:
+  ssid:     !secret fritzbox_wlan_sid
+  password: !secret fritzbox_wlan_pwd
+
+  # Use ONCE when renaming node
+  use_address: ${old_devicename}.local
+
+  # ONLY DURING DEVELOPMENT
+  #fast_connect: on
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "TEMP ${devicename} AP"
+    password: !secret esps_fallback_hotspot_pwd
+
+captive_portal:
+
+# Enable logging
+logger:
+  level: VERBOSE #makes uart stream available in esphome logstream
+  baud_rate: 0 #disable logging over uart
+
+# Enable Home Assistant API
+api:
+  password: !secret esps_api_pwd
+
+ota:
+  password: !secret esps_ota_pwd
+

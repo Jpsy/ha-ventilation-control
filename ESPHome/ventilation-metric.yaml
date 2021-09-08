@@ -1,0 +1,208 @@
+substitutions:
+  # node name
+  devicename: "ventilation-metric"
+  # to be used once when renaming
+  old_devicename: "ventilation-metric"
+  # inserted into full friendly name
+  friendly_name: ""
+  # how often to update (60s)
+  update_interval: "12s"
+  median_window: "5"
+
+
+<<: !include .ALL_esp_d1_mini.yaml
+<<: !include .ALL_heartbeat_led_d1_mini.yaml
+
+
+# I2C bus is needed for SHT30 humidity sensor
+i2c:
+  - id: bus_a
+    #scl: D1
+    #sda: D2
+    #scan: false
+    frequency: 50kHz
+    #frequency: 400kHz
+
+tca9548a:
+  - id: multiplex0
+    #address: 0x70
+    #i2c_id: i2c0
+    scan: true
+
+sensor:
+
+  - platform: sht3xd
+    #i2c_id: bus_a
+    address: 0x45
+    multiplexer:
+      id: multiplex0
+      channel: 0
+    update_interval: ${update_interval}
+    temperature:
+      name: "KWL Zuluft, Temperatur"
+      id: sht_1_temperature
+      state_class: measurement
+      filters:
+        - offset: -0.1
+        - median:
+            window_size: ${median_window}
+            send_every: ${median_window}
+            send_first_at: ${median_window}
+    humidity:
+      name: "KWL Zuluft, Luftfeuchte"
+      id: sht_1_humidity
+      state_class: measurement
+      filters:
+        - offset: -0.1
+        - median:
+            window_size: ${median_window}
+            send_every: ${median_window}
+            send_first_at: ${median_window}
+
+  - platform: template
+    name: "KWL Zuluft, Taupunkt"
+    lambda: |-
+      return (243.5*(log(id(sht_1_humidity).state/100)+((17.67*id(sht_1_temperature).state)/
+      (243.5+id(sht_1_temperature).state)))/(17.67-log(id(sht_1_humidity).state/100)-
+      ((17.67*id(sht_1_temperature).state)/(243.5+id(sht_1_temperature).state))));
+    state_class: measurement
+    device_class: temperature
+    unit_of_measurement: °C
+    icon: 'mdi:thermometer-alert'
+    update_interval: ${update_interval}
+    filters:
+      - median:
+          window_size: ${median_window}
+          send_every: ${median_window}
+          send_first_at: ${median_window}
+
+  - platform: sht3xd
+    # i2c_id: bus_a
+    address: 0x45
+    multiplexer:
+      id: multiplex0
+      channel: 1
+    update_interval: ${update_interval}
+    temperature:
+      name: "KWL Abluft, Temperatur"
+      id: sht_2_temperature
+      filters:
+        - offset: 0.0
+        - median:
+            window_size: ${median_window}
+            send_every: ${median_window}
+            send_first_at: ${median_window}
+    humidity:
+      name: "KWL Abluft, Luftfeuchte"
+      id: sht_2_humidity
+      filters:
+        - offset: 0.1
+        - median:
+            window_size: ${median_window}
+            send_every: ${median_window}
+            send_first_at: ${median_window}
+
+  - platform: template
+    name: "KWL Abluft, Taupunkt"
+    lambda: |-
+      return (243.5*(log(id(sht_2_humidity).state/100)+((17.67*id(sht_2_temperature).state)/
+      (243.5+id(sht_2_temperature).state)))/(17.67-log(id(sht_2_humidity).state/100)-
+      ((17.67*id(sht_2_temperature).state)/(243.5+id(sht_2_temperature).state))));
+    state_class: measurement
+    device_class: temperature
+    unit_of_measurement: °C
+    icon: 'mdi:thermometer-alert'
+    update_interval: ${update_interval}
+    filters:
+      - median:
+          window_size: ${median_window}
+          send_every: ${median_window}
+          send_first_at: ${median_window}
+
+
+  - platform: sht3xd
+    # i2c_id: bus_a
+    address: 0x45
+    multiplexer:
+      id: multiplex0
+      channel: 2
+    update_interval: ${update_interval}
+    temperature:
+      name: "KWL Außenluft, Temperatur"
+      id: sht_3_temperature
+      filters:
+        - offset: -0.1
+        - median:
+            window_size: ${median_window}
+            send_every: ${median_window}
+            send_first_at: ${median_window}
+    humidity:
+      name: "KWL Außenluft, Luftfeuchte"
+      id: sht_3_humidity
+      filters:
+        - offset: 0.1
+        - median:
+            window_size: ${median_window}
+            send_every: ${median_window}
+            send_first_at: ${median_window}
+
+  - platform: template
+    name: "KWL Außenluft, Taupunkt"
+    lambda: |-
+      return (243.5*(log(id(sht_3_humidity).state/100)+((17.67*id(sht_3_temperature).state)/
+      (243.5+id(sht_3_temperature).state)))/(17.67-log(id(sht_3_humidity).state/100)-
+      ((17.67*id(sht_3_temperature).state)/(243.5+id(sht_3_temperature).state))));
+    state_class: measurement
+    device_class: temperature
+    unit_of_measurement: °C
+    icon: 'mdi:thermometer-alert'
+    update_interval: ${update_interval}
+    filters:
+      - median:
+          window_size: ${median_window}
+          send_every: ${median_window}
+          send_first_at: ${median_window}
+
+
+  - platform: sht3xd
+    # i2c_id: bus_a
+    address: 0x45
+    multiplexer:
+      id: multiplex0
+      channel: 3
+    update_interval: ${update_interval}
+    temperature:
+      name: "KWL Fortluft, Temperatur"
+      id: sht_4_temperature
+      filters:
+        - offset: 0.1
+        - median:
+            window_size: ${median_window}
+            send_every: ${median_window}
+            send_first_at: ${median_window}
+    humidity:
+      name: "KWL Fortluft, Luftfeuchte"
+      id: sht_4_humidity
+      filters:
+        - offset: 0.0
+        - median:
+            window_size: ${median_window}
+            send_every: ${median_window}
+            send_first_at: ${median_window}
+
+  - platform: template
+    name: "KWL Fortluft, Taupunkt"
+    lambda: |-
+      return (243.5*(log(id(sht_4_humidity).state/100)+((17.67*id(sht_4_temperature).state)/
+      (243.5+id(sht_4_temperature).state)))/(17.67-log(id(sht_4_humidity).state/100)-
+      ((17.67*id(sht_4_temperature).state)/(243.5+id(sht_4_temperature).state))));
+    state_class: measurement
+    device_class: temperature
+    unit_of_measurement: °C
+    icon: 'mdi:thermometer-alert'
+    update_interval: ${update_interval}
+    filters:
+      - median:
+          window_size: ${median_window}
+          send_every: ${median_window}
+          send_first_at: ${median_window}

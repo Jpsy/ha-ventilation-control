@@ -1,0 +1,19 @@
+
+# let the onboard LED flash every few seconds
+# to show that the MCU is up and running
+
+output:
+  - platform: gpio
+    pin:
+      number: D4
+      mode: output
+      inverted: True
+    id: blueLED
+
+interval:
+  - interval: 2000ms
+    then:
+      - output.turn_on: blueLED
+      - delay: 10ms
+      - output.turn_off: blueLED
+

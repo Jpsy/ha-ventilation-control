@@ -1,0 +1,199 @@
+substitutions:
+  # node name
+  devicename: "ventilation-control"
+  # to be used once when renaming
+  old_devicename: "ventilation-control"
+  # inserted into full friendly name
+  friendly_name: ""
+  # how often to update (60s)
+  #update_interval: "12s"
+  #median_window: "5"
+
+
+#<<: !include .ALL_esp_d1_mini.yaml
+<<: !include .ALL_esp_d1_mini_no_api.yaml
+
+#<<: !include .ALL_heartbeat_led_d1_mini.yaml
+
+
+output:
+  - platform: gpio
+    pin:
+      number: D4
+      mode: output
+      inverted: True
+    id: blueLED
+
+
+  - platform: gpio
+    # button back (b)
+    pin:
+      number: D1
+      mode: output
+      inverted: True
+    id: button_back
+  - platform: gpio
+    # button up (u)
+    pin:
+      number: D2
+      mode: output
+      inverted: True
+    id: button_up
+  - platform: gpio
+    # button ok (o)
+    pin:
+      number: D5
+      mode: output
+      inverted: True
+    id: button_ok
+  - platform: gpio
+    # button down (d)
+    pin:
+      number: D6
+      mode: output
+      inverted: True
+    id: button_down
+  - platform: gpio
+    # button menu (m)
+    pin:
+      number: D7
+      mode: output
+      inverted: True
+    id: button_menu
+
+
+# text_sensor:
+#   # import control string from HA as text_sensor      
+#   - platform: homeassistant
+#     name: "KWL Control String"
+#     entity_id: input_text.kwl_control_string
+#     id: ha_control_string
+#     on_value:
+#       then:
+#         - output.turn_on: blueLED
+#         - lambda: |-
+#             if(id(ha_control_string).state == "#reset#"){
+#               id(esp_button_sequence_string) = "";
+#             }else if(id(ha_control_string).state != ""){
+#               id(esp_button_sequence_string) += id(ha_control_string).state;
+#               id(ha_control_string).publish_state("");
+#             }
+#             ESP_LOGD("DEBUG", "ESP_BUTTON_SEQUENCE_STRING: %s", id(esp_button_sequence_string).c_str());
+# # - logger.log:
+# #   format: "ESP_BUTTON_SEQUENCE_STRING: %s"
+# #   args: [ 'id(esp_button_sequence_string).state.c_str()' ]
+
+
+globals:
+  - id: esp_button_sequence_string
+    type: std::string
+    restore_value: no
+    initial_value: ''
+
+
+interval:
+  - interval: 2000ms
+    then:
+      - output.turn_on: blueLED
+      - delay: 10ms
+      - output.turn_off: blueLED
+      # - lambda: |-
+      #     id(ha_control_string).publish_state("XXX");
+
+  - interval: 200ms
+    then:
+      - script.execute: execute_next_command_in_control_string
+      # - logger.log:
+      #    format: "STATE OF HA ENTITY 'LED-Band Test ESP-Programmierung': %s"
+      #    args: [ 'id(ha_switch_led_band_esp_coding_test).state.c_str()' ]
+
+
+api:
+  password: !secret esps_api_pwd
+
+  services:
+    - service: send_button_sequence
+      variables:
+        button_sequence: string
+      then:
+        - lambda: |-
+            ESP_LOGD("DEBUG", "NEW BUTTON SEQUENCE RECEIVED: %s", button_sequence.c_str());
+            if(button_sequence == "#"){  // # = reset button sequence string!
+              id(esp_button_sequence_string) = "";
+            } else if(button_sequence != "") {
+              id(esp_button_sequence_string) += button_sequence;
+            }
+            ESP_LOGD("DEBUG", "ESP_BUTTON_SEQUENCE_STRING: %s", id(esp_button_sequence_string).c_str());
+    - service: set_ventilation_level
+      variables:
+        ventilation_level: int
+      then:
+        - lambda: |-
+            ESP_LOGD("DEBUG", "NEW VENTILATION LEVEL RECEIVED: %d", ventilation_level);
+            if(ventilation_level < 1 || ventilation_level > 4){
+              ESP_LOGE("DEBUG", "VENTILATION LEVEL OUT OF RANGE [1-4]: %d", ventilation_level);
+            } else {
+              std::string button_sequence = 
+                std::string("") +  // adding const chars[] to string works (adding to each other won't)
+                "bbbbbb" +    // escape from any possible state to top level
+                "mddoo" +     // go to menu -> Lüftung -> Betriebsprogramm
+                "dddoo" +     // select Dauertbetrieb
+                "bbbbbb" +    // escape to top level
+                "dddd"        // set ventilation down to 1
+              ;
+              // set ventilation up to desired level
+              for(int i=1; i<ventilation_level; i++){
+                  button_sequence += "u";
+              }
+
+              // confirm and return
+              button_sequence += "oo";
+
+              id(esp_button_sequence_string) += button_sequence;
+            }
+            ESP_LOGD("DEBUG", "ESP_BUTTON_SEQUENCE_STRING: %s", id(esp_button_sequence_string).c_str());
+
+
+script:
+  - id: execute_next_command_in_control_string
+    then:
+    - lambda: |-
+        if(!id(esp_button_sequence_string).empty()){
+          char c = std::tolower( id(esp_button_sequence_string).at(0) );
+          id(esp_button_sequence_string).erase(0,1);
+          
+          ESP_LOGD("DEBUG", "LOOP: NEXT BUTTON: %c", c);
+
+          //std::string allowed_buttons ("buodm");
+          //if(allowed_buttons.find(c) == std::string::npos){
+          //  ESP_LOGE("DEBUG", "LOOP: UNKNOWN BUTTON COMMAND FOUND: %c", c);
+          //}
+            
+          gpio::GPIOBinaryOutput* buttonGpio;
+          switch(c) {
+            case 'b':
+              buttonGpio = id(button_back);
+              break;
+            case 'u':
+              buttonGpio = id(button_up);
+              break;
+            case 'o':
+              buttonGpio = id(button_ok);
+              break;
+            case 'd':
+              buttonGpio = id(button_down);
+              break;
+            case 'm':
+              buttonGpio = id(button_menu);
+              break;
+            default:
+              buttonGpio = NULL;
+          }
+          if(buttonGpio != NULL){
+            buttonGpio->turn_on();
+            delay(100);
+            buttonGpio->turn_off();
+          } else {
+            ESP_LOGE("DEBUG", "LOOP: UNKNOWN BUTTON COMMAND FOUND: %c", c);
+          }
+        }

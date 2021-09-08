@@ -1,0 +1,15 @@
+substitutions:
+  # node name
+  devicename: "humid-voc-wohnzimmer"
+  # to be used once when renaming
+  old_devicename: "humid-voc-wohnzimmer"
+  # inserted into full friendly name
+  friendly_name: "Wohnzimmer"
+  # baseline config values for SGP30 sensor
+  eco2_baseline: "0x8FCA"
+  tvoc_baseline: "0x95BF"
+
+
+<<: !include .ALL_esp_d1_mini.yaml
+<<: !include .ALL_heartbeat_led_d1_mini.yaml
+<<: !include .ALL_sensor_voc_and_humid.yaml

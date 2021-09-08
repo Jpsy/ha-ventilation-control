@@ -1,0 +1,12 @@
+substitutions:
+  # node name
+  devicename: "humid-bad-eltern"
+  # to be used once when renaming
+  old_devicename: "humid-bad-eltern"
+  # inserted into full friendly name
+  friendly_name: "Bad Eltern"
+
+
+<<: !include .ALL_esp_d1_mini.yaml
+<<: !include .ALL_heartbeat_led_d1_mini.yaml
+<<: !include .ALL_sensor_humid.yaml
