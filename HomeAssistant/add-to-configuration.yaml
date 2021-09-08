@@ -1,0 +1,11 @@
+# ADD THIS TO YOUR CONFIGURATION.YAML FILE
+input_select:
+  ventilation_level:
+    name: Belüftungsstufe
+    options:
+      - 1
+      - 2
+      - 3
+      - 4
+    #initial: Aus
+    icon: hass:fan

@@ -1,0 +1,329 @@
+# CREATE AN EMPTY DASHBOARD AND REPLACE IT WITH THIS CODE IN RAW CONFIG EDITOR!
+  - title: Belüftung
+    path: luft
+    icon: hass:fan
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - entity: input_select.ventilation_level
+                name: Belüftungsstufe (auto/manuell)
+              - entity: input_boolean.ventilation_auto
+              - entity: sensor.ventilation_level_by_co2
+                name: Belüftungsstufe errechnet nach CO₂-Werten
+              - entity: sensor.ventilation_level_by_dewpoints
+                name: Belüftungsstufe errechnet nach Taupunkten
+              - type: divider
+              - entity: sensor.ventilation_current_co2_max
+                name: Aktuell höchster CO₂-Wert
+              - entity: sensor.ventilation_pid_co2_setpoint
+                name: CO₂-PID-Zielwert
+              - entity: sensor.ventilation_pid_co2_output
+                name: CO₂-PID-Ausgang
+              - type: divider
+              - entity: sensor.ventilation_current_dewpoint_max
+                name: Aktuell höchster Taupunkt
+              - entity: sensor.ventilation_pid_dewpoint_setpoint
+                name: Taupunkt-PID-Zielwert
+              - entity: sensor.ventilation_pid_dewpoint_output
+                name: Taupunkt-PID-Ausgang
+              - type: divider
+              - entity: binary_sensor.kwl_bypass_active
+                name: Bypass (überbrückt KWL-Wärmetauscher)
+            title: Belüftungsstufe
+          - type: history-graph
+            entities:
+              - entity: input_select.ventilation_level
+                name: Lüftungsstufe
+              - entity: sensor.ventilation_level_by_co2
+                name: Lüftungsstufe wg. CO₂
+              - entity: sensor.ventilation_level_by_dewpoints
+                name: Lüftungsstufe wg. Feuchte
+            hours_to_show: 24
+            refresh_interval: 0
+            title: 1 Tag
+          - type: history-graph
+            entities:
+              - entity: sensor.ventilation_pid_co2_output
+                name: CO₂-PID-Ausgang
+              - entity: sensor.ventilation_pid_dewpoint_output
+                name: Taupunkt-PID-Ausgang
+            hours_to_show: 24
+            refresh_interval: 0
+          - type: history-graph
+            entities:
+              - entity: input_select.ventilation_level
+                name: Lüftungsstufe
+              - entity: sensor.ventilation_level_by_co2
+                name: Lüftungsstufe wg. CO₂
+              - entity: sensor.ventilation_level_by_dewpoints
+                name: Lüftungsstufe wg. Feuchte
+            hours_to_show: 2
+            refresh_interval: 0
+            title: 2 Stunden
+          - type: history-graph
+            entities:
+              - entity: sensor.ventilation_pid_co2_output
+                name: CO₂-PID-Ausgang
+              - entity: sensor.ventilation_pid_dewpoint_output
+                name: Taupunkt-PID-Ausgang
+              - entity: sensor.ventilation_current_co2_max
+                name: Aktuell höchster CO₂-Wert
+              - entity: sensor.ventilation_pid_co2_setpoint
+                name: CO₂-PID-Zielwert
+              - type: divider
+              - entity: sensor.ventilation_current_dewpoint_max
+                name: Aktuell höchster Taupunkt
+              - entity: sensor.ventilation_pid_dewpoint_setpoint
+                name: Taupunkt-PID-Zielwert
+            hours_to_show: 2
+            refresh_interval: 0
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - entity: sensor.feuchtesensor_bad_eltern_temperatur
+                name: Temperatur
+              - entity: sensor.feuchtesensor_bad_eltern_luftfeuchte
+                name: Luftfeuchte
+              - entity: sensor.feuchtesensor_bad_eltern_taupunkt
+                name: Taupunkt
+            title: Bad Eltern
+          - type: entities
+            entities:
+              - entity: sensor.feuchtesensor_bad_kind_temperatur
+                name: Temperatur
+              - entity: sensor.feuchtesensor_bad_kind_luftfeuchte
+                name: Luftfeuchte
+              - entity: sensor.feuchtesensor_bad_kind_taupunkt
+                name: Taupunkt
+            title: Bad Kind
+          - type: entities
+            entities:
+              - entity: sensor.feuchtesensor_kinderzimmer_temperatur
+                name: Temperatur
+              - entity: sensor.feuchtesensor_kinderzimmer_luftfeuchte
+                name: Luftfeuchte
+              - entity: sensor.feuchtesensor_kinderzimmer_taupunkt
+                name: Taupunkt
+            title: Kinderzimmer
+          - type: entities
+            entities:
+              - entity: sensor.feuchtesensor_aussengarage_temperatur
+                name: Temperatur
+              - entity: sensor.feuchtesensor_aussengarage_luftfeuchte
+                name: Luftfeuchte
+              - entity: sensor.feuchtesensor_aussengarage_taupunkt
+                name: Taupunkt
+            title: Außengarage
+          - type: history-graph
+            entities:
+              - entity: sensor.feuchtesensor_bad_eltern_luftfeuchte
+                name: Luftfeuchte Bad Eltern
+              - entity: sensor.feuchtesensor_bad_eltern_taupunkt
+                name: Taupunkt Bad Eltern
+              - entity: sensor.feuchtesensor_bad_eltern_temperatur
+                name: Temperatur Bad Eltern
+              - entity: sensor.feuchtesensor_bad_kind_luftfeuchte
+                name: Luftfeuchte Bad Kind
+              - entity: sensor.feuchtesensor_bad_kind_taupunkt
+                name: Taupunkt Bad Kind
+              - entity: sensor.feuchtesensor_bad_kind_temperatur
+                name: Temperatur Bad Kind
+              - entity: sensor.feuchtesensor_kinderzimmer_luftfeuchte
+                name: Luftfeuchte Kind
+              - entity: sensor.feuchtesensor_kinderzimmer_taupunkt
+                name: Taupunkt Kind
+              - entity: sensor.feuchtesensor_kinderzimmer_temperatur
+                name: Temperatur Kind
+            hours_to_show: 24
+            refresh_interval: 0
+            title: 1 Tag innen
+          - type: statistics-graph
+            entities:
+              - entity: sensor.feuchtesensor_bad_eltern_temperatur
+                name: Temperatur Bad Eltern
+              - entity: sensor.feuchtesensor_bad_eltern_taupunkt
+                name: Taupunkt Bad Eltern
+              - entity: sensor.feuchtesensor_bad_kind_temperatur
+                name: Temperatur Bad Kind
+              - entity: sensor.feuchtesensor_bad_kind_taupunkt
+                name: Taupunkt Bad Kind
+              - entity: sensor.feuchtesensor_kinderzimmer_temperatur
+                name: Temperatur Kind
+              - entity: sensor.feuchtesensor_kinderzimmer_taupunkt
+                name: Taupunkt Kind
+            title: 14 Tage innen
+            stat_types:
+              - mean
+            days_to_show: 14
+          - type: statistics-graph
+            days_to_show: 14
+            entities:
+              - entity: sensor.feuchtesensor_bad_eltern_luftfeuchte
+                name: Luftfeuchte Bad Eltern
+              - entity: sensor.feuchtesensor_bad_kind_luftfeuchte
+                name: Luftfeuchte Bad Kind
+              - entity: sensor.feuchtesensor_kinderzimmer_luftfeuchte
+                name: Luftfeuchte Kind
+            stat_types:
+              - mean
+          - type: statistics-graph
+            days_to_show: 14
+            entities:
+              - entity: sensor.feuchtesensor_aussengarage_temperatur
+                name: Temperatur Außengarage
+              - entity: sensor.feuchtesensor_aussengarage_taupunkt
+                name: Taupunkt Außengarage
+              - entity: sensor.kwl_aussenluft_temperatur
+                name: Temperatur Außenluft
+              - entity: sensor.kwl_aussenluft_taupunkt
+                name: Taupunkt Außenluft
+            title: 14 Tage außen
+            stat_types:
+              - mean
+          - type: statistics-graph
+            days_to_show: 14
+            entities:
+              - entity: sensor.feuchtesensor_aussengarage_luftfeuchte
+                name: Luftfeuchte Außengarage
+              - entity: sensor.kwl_aussenluft_luftfeuchte
+                name: Luftfeuchte Außenluft
+            stat_types:
+              - mean
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - entity: sensor.luftqualitat_wohnzimmer_voc
+                name: Flüchtige organische Stoffe
+              - entity: sensor.luftqualitat_wohnzimmer_co2
+                name: CO₂
+            title: Luftgüte Wohnzimmer
+          - type: entities
+            entities:
+              - entity: sensor.luftqualitat_eltern_voc
+                name: Flüchtige organische Stoffe
+              - entity: sensor.luftqualitat_eltern_co2
+                name: CO₂
+            title: Luftgüte Eltern
+          - type: entities
+            entities:
+              - entity: sensor.luftqualitat_buro_voc
+                name: Flüchtige organische Stoffe
+              - entity: sensor.luftqualitat_buro_co2
+                name: CO₂
+            title: Luftgüte Büro
+          - type: entities
+            entities:
+              - entity: sensor.luftqualitat_kinderzimmer_voc
+                name: Flüchtige organische Stoffe
+              - entity: sensor.luftqualitat_kinderzimmer_co2
+                name: CO₂
+            title: Luftgüte Kind
+          - type: history-graph
+            entities:
+              - entity: sensor.luftqualitat_wohnzimmer_voc
+                name: VOC Wohnzimmer
+              - entity: sensor.luftqualitat_eltern_voc
+                name: VOC Eltern
+              - entity: sensor.luftqualitat_buro_voc
+                name: VOC Büro
+              - entity: sensor.luftqualitat_kinderzimmer_voc
+                name: VOC Kind
+              - entity: sensor.luftqualitat_wohnzimmer_co2
+                name: CO₂ Wohnzimmer
+              - entity: sensor.luftqualitat_eltern_co2
+                name: CO₂ Eltern
+              - entity: sensor.luftqualitat_buro_co2
+                name: CO₂ Büro
+              - entity: sensor.luftqualitat_kinderzimmer_co2
+                name: CO₂ Kind
+            hours_to_show: 24
+            refresh_interval: 0
+            title: 1 Tag
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - entity: binary_sensor.kwl_bypass_active
+                name: Bypass (überbrückt KWL-Wärmetauscher)
+              - type: divider
+              - entity: sensor.kwl_aussenluft_temperatur
+              - entity: sensor.kwl_zuluft_temperatur
+              - entity: sensor.kwl_abluft_temperatur
+              - entity: sensor.kwl_fortluft_temperatur
+              - type: divider
+              - entity: sensor.kwl_aussenluft_luftfeuchte
+              - entity: sensor.kwl_zuluft_luftfeuchte
+              - entity: sensor.kwl_abluft_luftfeuchte
+              - entity: sensor.kwl_fortluft_luftfeuchte
+              - type: divider
+              - entity: sensor.kwl_aussenluft_taupunkt
+              - entity: sensor.kwl_zuluft_taupunkt
+              - entity: sensor.kwl_abluft_taupunkt
+              - entity: sensor.kwl_fortluft_taupunkt
+            title: Messwerte Belüftungsanlage
+          - type: history-graph
+            entities:
+              - entity: sensor.kwl_zuluft_temperatur
+              - entity: sensor.kwl_abluft_temperatur
+              - entity: sensor.kwl_aussenluft_temperatur
+              - entity: sensor.kwl_fortluft_temperatur
+              - entity: sensor.kwl_zuluft_luftfeuchte
+              - entity: sensor.kwl_abluft_luftfeuchte
+              - entity: sensor.kwl_aussenluft_luftfeuchte
+              - entity: sensor.kwl_fortluft_luftfeuchte
+              - entity: sensor.viessmann_vitocal_222_s_outside_temperature
+                name: Außen Vitocal-Sensor
+              - entity: sensor.temperature_goldene_bremm
+                name: Außen DWD
+            hours_to_show: 24
+            refresh_interval: 0
+            title: 1 Tag
+          - type: history-graph
+            entities:
+              - entity: sensor.kwl_zuluft_taupunkt
+              - entity: sensor.kwl_abluft_taupunkt
+              - entity: sensor.kwl_aussenluft_taupunkt
+              - entity: sensor.kwl_fortluft_taupunkt
+            hours_to_show: 24
+            refresh_interval: 0
+          - type: history-graph
+            entities:
+              - entity: binary_sensor.kwl_bypass_active
+              - entity: sun.sun
+            hours_to_show: 336
+            refresh_interval: 0
+          - type: statistics-graph
+            entities:
+              - sensor.kwl_zuluft_temperatur
+              - sensor.kwl_abluft_temperatur
+              - sensor.kwl_aussenluft_temperatur
+              - sensor.kwl_fortluft_temperatur
+            days_to_show: 14
+            title: 14 Tage
+            stat_types:
+              - mean
+          - type: statistics-graph
+            entities:
+              - sensor.kwl_zuluft_luftfeuchte
+              - sensor.kwl_abluft_luftfeuchte
+              - sensor.kwl_aussenluft_luftfeuchte
+              - sensor.kwl_fortluft_luftfeuchte
+            days_to_show: 14
+            stat_types:
+              - mean
+            chart_type: line
+          - type: statistics-graph
+            entities:
+              - entity: sensor.kwl_zuluft_taupunkt
+              - entity: sensor.kwl_abluft_taupunkt
+              - entity: sensor.kwl_aussenluft_taupunkt
+              - entity: sensor.kwl_fortluft_taupunkt
+            days_to_show: 14
+            stat_types:
+              - mean
+            chart_type: line
