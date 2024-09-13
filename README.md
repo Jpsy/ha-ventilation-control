@@ -16,10 +16,10 @@ all ESPhome YAML files to program the different ESP8266 MCUs of the project. I u
 files that contain YAML snippets to add to your configuration.yaml and to your Lovelace dashboard
 * /NodeRED =  
 Import this into your NodeRED add-on as a new flow. It contains the full HA logic.
-* /diagram =  
-Some diagrams and graphics showing details of the project (also found in the PDF above, but here in better resolution)
 * /img =  
-Photos of several components of the project, partially also contained in the PDF above
+Photos, screenshots, and diagrams of several components of the project. They are partially also contained in the PDF above, but this folder contains more pics and better resolutions.
+* /video =  
+A video that shows how the LB1 can be controlled from the Home Assistant dashboard.
 
 As time allows I will try to publish a new project description in the Home Assistant community forum.  
 But for now this is all I have for you. **Sorry for the mess.**
@@ -42,10 +42,11 @@ Alle ESPhome-YAML-Files um die verschiedenen ESP8266-MCUs des Projekts zu progra
 Dateien mit YAML-Snippets, die zum Hinzufügen zur configuration.yaml und zum Lovelace-Dashboard
 * /NodeRED =  
 Diese Datei kann im NodeRED Add-On als neuer Flow importiert werden, und enthält die gesamte HA-Logik.
-* /diagram =  
-Einige Diagramme und Grafiken zu Details des Projekts. Sie sind teilweise auch in obigem PDF enthalten, dort aber in schlechterer Qualität.
 * /img =  
-Fotos von diversen Komponenten des Projektes. Sie sind teilweise auch in obigem PDF enthalten.
+Fotos, Screenshots, und Diagramme zu diversen Komponenten des Projektes. Sie sind teilweise auch in obigem PDF enthalten, dort aber in schlechterer Qualität.
+* /video =  
+Ein Video, das zeigt, wie das LB1 von Home Assistant aus gesteuert werden kann.
+
 
 Wenn meine Zeit es erlaubt, werde ich im Home Assistant Community-Forum eine neue Projektbeschreibung erstellen.  
 Aber im Moment gibt es leider nur diese Fragmenten hier. **Sorry für das Chaos.**
