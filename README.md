@@ -8,7 +8,7 @@ Home Assistant project
 
 This project integrates a Viessmann 300-W with control panel LB1 into Home Assistant as a smart home center. The logic in Home Assistant is implemented using the Add-On Node RED. The microcontrollers are also programmed directly from Home Assistant using the ESPHome add-on.
 
-The project was originally published on the German branch of makeprojects.com. Unfortunately, this offshoot no longer exists and the article is no longer available there. A dump of the article can be found in [this PDF](Die%20klassische%20KWL%20wird%20smart!%20_%20Make_%20Projects%20De.pdf) (in German). All companion files can be found (somewhat disorganized) in the subdirectories of the repo:
+The project was originally published on the German branch of makeprojects.com. Unfortunately, this offshoot no longer exists and the article is no longer available there. A dump of the article can be found in the [PDF in the root of this repo](Die%20klassische%20KWL%20wird%20smart!%20_%20Make_%20Projects%20De.pdf) (in German). All companion files can be found (somewhat disorganized) in the subdirectories of the repo:
 
 * /ESPHome =  
 all ESPhome YAML files to program the different ESP8266 MCUs of the project. I used D1 mini MCUs.
@@ -34,7 +34,7 @@ Home Assistant Projekt
 
 Dieses Projekt bindet eine Viessmann 300-W mit Bedienteil LB1 in Home Assistant als Smart Home-Zentrale ein. Die Programmierung der Steuerung in Home Assistant erfolgt mit dem Home Assistant Add-On Node RED. Die Microcontroller werden ebenfalls direkt aus Home Assistant heraus mit dem Add-On ESPHome programmiert.
 
-Das Projekt wurde ursprünglich im deutschen Ableger von makeprojects.com veröffentlicht. Leider existiert dieser Ableger nicht mehr und der Artikel ist dort nicht mehr verfügbar. Ein Dump des Artikels findet sich in [diesem PDF](Die%20klassische%20KWL%20wird%20smart!%20_%20Make_%20Projects%20De.pdf). Die ergänzenden Dateien finden sich (etwas ungeordnet) in den Unterverzeichnissen des Repos:
+Das Projekt wurde ursprünglich im deutschen Ableger von makeprojects.com veröffentlicht. Leider existiert dieser Ableger nicht mehr und der Artikel ist dort nicht mehr verfügbar. Ein Dump des Artikels findet sich im [PDF im Wurzelverzeichnis dieses Repos](Die%20klassische%20KWL%20wird%20smart!%20_%20Make_%20Projects%20De.pdf). Die ergänzenden Dateien finden sich (etwas ungeordnet) in den Unterverzeichnissen des Repos:
 
 * /ESPHome =  
 Alle ESPhome-YAML-Files um die verschiedenen ESP8266-MCUs des Projekts zu programmieren. Verwendet werden D1 mini-MCUs.
