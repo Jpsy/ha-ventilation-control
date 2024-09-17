@@ -11,7 +11,7 @@ This project integrates a Viessmann 300-W with control panel LB1 into Home Assis
 The project was originally published on the German branch of makeprojects.com. Unfortunately, this offshoot no longer exists and the article is no longer available there. A dump of the article can be found in the [PDF in the root of this repo](Die%20klassische%20KWL%20wird%20smart!%20_%20Make_%20Projects%20De.pdf) (in German). All companion files can be found (somewhat disorganized) in the subdirectories of the repo:
 
 * /ESPHome =  
-all ESPhome YAML files to program the different ESP8266 MCUs of the project. I used D1 mini MCUs.
+all ESPhome YAML files to program the different ESP8266 MCUs of the project. I used D1 mini MCUs by Lolin.
 * /HomeAssistant =  
 files that contain YAML snippets to add to your configuration.yaml and to your Lovelace dashboard
 * /NodeRED =  
@@ -19,7 +19,7 @@ Import this into your NodeRED add-on as a new flow. It contains the full HA logi
 * /img =  
 Photos, screenshots, and diagrams of several components of the project. They are partially also contained in the PDF above, but this folder contains more pics and better resolutions.
 * /video =  
-A video that shows how the LB1 can be controlled from the Home Assistant dashboard.
+A video that shows how the LB1 with integrated ESP8266 can be controlled from the Home Assistant dashboard.
 
 As time allows I will try to publish a new project description in the Home Assistant community forum.  
 But for now this is all I have for you. **Sorry for the mess.**
@@ -37,15 +37,15 @@ Dieses Projekt bindet eine Viessmann 300-W mit Bedienteil LB1 in Home Assistant 
 Das Projekt wurde ursprünglich im deutschen Ableger von makeprojects.com veröffentlicht. Leider existiert dieser Ableger nicht mehr und der Artikel ist dort nicht mehr verfügbar. Ein Dump des Artikels findet sich im [PDF im Wurzelverzeichnis dieses Repos](Die%20klassische%20KWL%20wird%20smart!%20_%20Make_%20Projects%20De.pdf). Die ergänzenden Dateien finden sich (etwas ungeordnet) in den Unterverzeichnissen des Repos:
 
 * /ESPHome =  
-Alle ESPhome-YAML-Files um die verschiedenen ESP8266-MCUs des Projekts zu programmieren. Verwendet werden D1 mini-MCUs.
+Alle ESPhome-YAML-Files um die verschiedenen ESP8266-MCUs des Projekts zu programmieren. Verwendet werden D1 mini-MCUs von Lolin.
 * /HomeAssistant =  
-Dateien mit YAML-Snippets, die zum Hinzufügen zur configuration.yaml und zum Lovelace-Dashboard
+Dateien mit YAML-Snippets zum Hinzufügen zur configuration.yaml und zum Lovelace-Dashboard
 * /NodeRED =  
 Diese Datei kann im NodeRED Add-On als neuer Flow importiert werden, und enthält die gesamte HA-Logik.
 * /img =  
 Fotos, Screenshots, und Diagramme zu diversen Komponenten des Projektes. Sie sind teilweise auch in obigem PDF enthalten, dort aber in schlechterer Qualität.
 * /video =  
-Ein Video, das zeigt, wie das LB1 von Home Assistant aus gesteuert werden kann.
+Ein Video, das zeigt, wie das LB1 nach dem Einbau des ESP8266 von Home Assistant aus gesteuert werden kann.
 
 
 Wenn meine Zeit es erlaubt, werde ich im Home Assistant Community-Forum eine neue Projektbeschreibung erstellen.  
